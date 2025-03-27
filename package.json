@@ -1,9 +1,31 @@
 {
-  "name": "hexo-ai-summary",
+  "name": "hexo-generator-ai-summary",
   "version": "1.0.0",
+  "description": "Hexo plugin for generating AI-powered article summaries",
+  "keywords": [
+    "hexo-plugin",
+    "hexo",
+    "ai",
+    "summary",
+    "deepseek"
+  ],
+  "homepage": "https://github.com/liuzhihang/hexo-generator-ai-summary#readme",
+  "bugs": {
+    "url": "https://github.com/liuzhihang/hexo-generator-ai-summary/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liuzhihang/hexo-generator-ai-summary.git"
+  },
+  "license": "MIT",
+  "author": "liuzhihang liuzhihangs@qq.com",
+  "type": "commonjs",
   "main": "index.js",
-  "peerDependencies": {
-    "hexo": "^7.0.0"
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "axios": "^1.8.4",
@@ -12,11 +34,11 @@
     "js-yaml": "^4.1.0",
     "lodash.merge": "^4.6.2"
   },
-  "keywords": [
-    "hexo-plugin",
-    "hexo"
-  ],
-  "author": "liuzhihang",
-  "license": "MIT",
-  "description": ""
+  "devDependencies": {},
+  "peerDependencies": {
+    "hexo": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
 }

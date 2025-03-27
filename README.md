@@ -1,9 +1,9 @@
 ﻿# Hexo AI Summary Plugin
 
-[![npm](https://img.shields.io/npm/v/hexo-ai-summary)](https://www.npmjs.com/package/hexo-ai-summary)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![npm](https://img.shields.io/npm/v/hexo-generator-ai-summary)](https://www.npmjs.com/package/hexo-generator-ai-summary)
+[![GitHub](https://img.shields.io/github/stars/liuzhihang/hexo-generator-ai-summary)](https://github.com/liuzhihang/hexo-generator-ai-summary)
 
-Hexo plugin that automatically generates professional article summaries using AI API.
+Hexo plugin for generating AI-powered article summaries.
 
 👉 [中文文档](README_CN.md) | [Demo](https://yourblog.com)
 
@@ -18,7 +18,7 @@ Hexo plugin that automatically generates professional article summaries using AI
 ## 安装
 
 ```bash
-npm install hexo-ai-summary --save
+npm install hexo-generator-ai-summary --save
 ```
 
 ## 配置
@@ -30,7 +30,7 @@ ai_summary:
   enable: true
   cache_path: "./ai-summary-cache.json"
   force_refresh: false
-  target_titles:  # 指定需要生成的文章标题
+  target_titles: # 指定需要生成的文章标题
     - "从 Java 锁到分布式锁"
   ai_service:
     endpoint: "https://api.deepseek.com/v1/chat/completions"
@@ -46,6 +46,7 @@ ai_summary:
 ```
 
 2. 在需要生成摘要的文章头部添加标识：
+
 ```markdown
 ---
 title: 你的文章标题
@@ -54,6 +55,7 @@ ai_summary: "" # 插件会自动填充
 ```
 
 ## 使用示例
+
 ### 本地生成
 
 ```yaml
@@ -63,13 +65,14 @@ hexo clean && hexo generate --debug
 ### 集成到 GitHub Action
 
 创建 `.github/workflows/ai-summary.yml`：
+
 ```yaml
 name: AI Summary Generation
 
 on:
   push:
-    branches: [main]
-    paths: 
+    branches: [ main ]
+    paths:
       - 'source/_posts/**'
 
 jobs:
@@ -92,7 +95,9 @@ jobs:
 ```
 
 ## 常见问题
+
 ### 如何强制重新生成摘要？
+
 设置 force_refresh: true
 
 ### 摘要没有生成怎么办？
@@ -102,14 +107,33 @@ jobs:
 3. 确保文章内容超过 100 字
 
 ## 贡献指南
+
 欢迎提交 Issue 和 PR！开发流程：
 
 ```bash
-git clone https://github.com/yourname/hexo-ai-summary.git
-cd hexo-ai-summary
+git clone https://github.com/liuzhihang/hexo-generator-ai-summary.git
+cd hexo-generator-ai-summary
 npm install
 # 修改代码后运行测试
 ```
 
+---
+
+### **注意事项**
+
+1. **版本号管理**：  
+   每次发布前通过 `npm version patch` 更新版本号。
+2. **文档一致性**：  
+   全局搜索 `hexo-ai-summary` 确保无残留旧名称。
+3. **GitHub 同步**：  
+   推送 README 更新到仓库：
+
+```bash
+git add README.md
+git commit -m "docs: update for new package name"
+git push origin main
+```
+
 ## 许可证
-MIT License © 2024 LiuZhihang
+
+MIT License © 2024 liuzhihang
