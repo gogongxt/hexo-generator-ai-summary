@@ -50,7 +50,7 @@ ai_summary:
 ```markdown
 ---
 title: 你的文章标题
-ai_summary: "" # 插件会自动填充
+ai: "" # 插件会自动填充
 ---
 ```
 
