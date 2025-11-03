@@ -8,11 +8,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "axios": "^1.8.4",
     "fs-extra": "^11.3.0",
-    "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
-    "lodash.merge": "^4.6.2"
+    "lodash.merge": "^4.6.2",
+    "openai": "^6.7.0"
   },
   "peerDependencies": {
     "hexo": ">=7.0.0"

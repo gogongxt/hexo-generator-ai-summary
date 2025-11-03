@@ -23,22 +23,22 @@ npm install hexo-generator-ai-summary --save
 
 ## 配置
 
-1. 在 Hexo 根目录的 _config.yml 中添加：
+1. 在 Hexo 根目录的 \_config.yml 中添加：
 
 ```yml
 ai_summary:
   enable: true
-  require_front_matter_ai: false  # 是否要求front matter中包含ai字段才生成
-  cache_path: "./ai-summary-cache.json"
+  require_front_matter_ai: false # 是否要求front matter中包含ai字段才生成
+  content_max_length: 0 # 传递给AI的内容长度限制，0表示不限制，单位：字符
   force_refresh: false
   target_titles: # 指定需要生成的文章标题（当require_front_matter_ai为false时生效）
     - "从 Java 锁到分布式锁"
   ai_service:
-    endpoint: "https://api.deepseek.com/v1/chat/completions"
+    endpoint: "https://api-inference.modelscope.cn/v1/chat/completions"
     headers:
-      Authorization: "Bearer YOUR_API_KEY"
+      Authorization: "Bearer $API"
     params:
-      model: "deepseek-chat"
+      model: "deepseek-ai/DeepSeek-V3.2-Exp"
       temperature: 0.7
       max_tokens: 200
       messages:
@@ -49,6 +49,7 @@ ai_summary:
 2. 根据配置方式选择文章标识方式：
 
 **方式一：按需生成（推荐）**
+
 - 设置 `require_front_matter_ai: true`
 - 在需要生成摘要的文章头部添加：
 
@@ -60,6 +61,7 @@ ai: "" # 插件会自动填充生成的摘要
 ```
 
 **方式二：标题列表方式**
+
 - 设置 `require_front_matter_ai: false`（默认）
 - 在 `target_titles` 中配置文章标题，无需在文章中添加标识
 
@@ -72,6 +74,7 @@ ai: "" # 插件会自动填充生成的摘要
 ai_summary:
   enable: true
   require_front_matter_ai: true
+  content_max_length: 5000 # 可选：限制发送给AI的内容长度
   # ... 其他配置
 ```
 
@@ -84,11 +87,23 @@ ai_summary:
 ai_summary:
   enable: true
   require_front_matter_ai: false
+  content_max_length: 0 # 可选：0表示不限制内容长度
   target_titles:
     - "从 Java 锁到分布式锁"
     - "你的文章标题"
   # ... 其他配置
 ```
+
+### 内容长度控制
+
+- `content_max_length: 0` - 不限制内容长度（默认）
+- `content_max_length: 5000` - 只发送前 5000 个字符给 AI
+- `content_max_length: 1000` - 只发送前 1000 个字符给 AI
+
+**使用场景：**
+
+- **不限制**：适用于文章较短或需要完整内容的场景
+- **限制长度**：适用于长文章，可以节省 token 消耗和提高响应速度
 
 ### 本地生成
 
@@ -105,9 +120,9 @@ name: AI Summary Generation
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
-      - 'source/_posts/**'
+      - "source/_posts/**"
 
 jobs:
   generate-summary:
