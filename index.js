@@ -43,21 +43,31 @@ hexo.extend.filter.register('before_post_render', async function (post) {
             return post;
         }
 
-        // 2. 标题过滤：仅处理配置中的目标文章
+        // 2. 检查是否要求 front matter 中包含 ai 参数
+        const requireFrontMatterAi = config.require_front_matter_ai || false;
+        if (requireFrontMatterAi) {
+            const hasAiField = post.ai !== undefined;
+            if (!hasAiField) {
+                log.info(`[跳过] front matter 中无 ai 参数: ${post.title}`);
+                return post;
+            }
+        }
+
+        // 3. 标题过滤：仅处理配置中的目标文章
         const targetTitles = config.target_titles || [];
         if (targetTitles.length > 0 && !targetTitles.includes(post.title)) {
             log.info(`[跳过] 非目标文章: ${post.title}`);
             return post;
         }
 
-        // 3. 检查是否已存在摘要（调试模式下强制刷新）
+        // 4. 检查是否已存在摘要（调试模式下强制刷新）
         const hasExistingSummary = post.ai && Array.isArray(post.ai) && post.ai.length > 0;
         if (hasExistingSummary && !config.debug_force) {
             log.info(`[跳过] 已存在摘要: ${post.title}`);
             return post;
         }
 
-        // 4. 生成摘要
+        // 5. 生成摘要
         log.info(`[开始] 生成摘要: ${post.title}`);
         let rawSummary;
         try {

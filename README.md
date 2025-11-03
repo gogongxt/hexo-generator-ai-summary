@@ -28,9 +28,10 @@ npm install hexo-generator-ai-summary --save
 ```yml
 ai_summary:
   enable: true
+  require_front_matter_ai: false  # 是否要求front matter中包含ai字段才生成
   cache_path: "./ai-summary-cache.json"
   force_refresh: false
-  target_titles: # 指定需要生成的文章标题
+  target_titles: # 指定需要生成的文章标题（当require_front_matter_ai为false时生效）
     - "从 Java 锁到分布式锁"
   ai_service:
     endpoint: "https://api.deepseek.com/v1/chat/completions"
@@ -45,20 +46,53 @@ ai_summary:
           content: "请用中文生成一篇不超过200字的专业摘要"
 ```
 
-2. 在需要生成摘要的文章头部添加标识：
+2. 根据配置方式选择文章标识方式：
+
+**方式一：按需生成（推荐）**
+- 设置 `require_front_matter_ai: true`
+- 在需要生成摘要的文章头部添加：
 
 ```markdown
 ---
 title: 你的文章标题
-ai: "" # 插件会自动填充
+ai: "" # 插件会自动填充生成的摘要
 ---
 ```
 
+**方式二：标题列表方式**
+- 设置 `require_front_matter_ai: false`（默认）
+- 在 `target_titles` 中配置文章标题，无需在文章中添加标识
+
 ## 使用示例
+
+### 方式一：按需生成模式
+
+```yml
+# _config.yml
+ai_summary:
+  enable: true
+  require_front_matter_ai: true
+  # ... 其他配置
+```
+
+然后在需要的文章中添加 `ai: ""` 字段。
+
+### 方式二：标题列表模式
+
+```yml
+# _config.yml
+ai_summary:
+  enable: true
+  require_front_matter_ai: false
+  target_titles:
+    - "从 Java 锁到分布式锁"
+    - "你的文章标题"
+  # ... 其他配置
+```
 
 ### 本地生成
 
-```yaml
+```bash
 hexo clean && hexo generate --debug
 ```
 
@@ -105,6 +139,9 @@ jobs:
 1. 检查 API 密钥有效性
 2. 查看日志 hexo generate --debug
 3. 确保文章内容超过 100 字
+4. 检查配置是否正确：
+   - 如果使用 `require_front_matter_ai: true`，确认文章 front matter 中包含 `ai` 字段
+   - 如果使用标题列表方式，确认文章标题在 `target_titles` 列表中
 
 ## 贡献指南
 
